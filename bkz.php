@@ -1,51 +1,16 @@
 <?php
 session_start();
 
-// Fungsi untuk menghasilkan soal CAPTCHA
-function generateCaptcha() {
-    $operators = ['+', '-', '*', '/'];
-    $number1 = rand(1, 5);
-    $number2 = rand(1, 5);
-    $operator = $operators[array_rand($operators)];
-
-    switch ($operator) {
-        case '+':
-            $_SESSION['captcha'] = $number1 + $number2;
-            break;
-        case '-':
-            if ($number1 < $number2) {
-                list($number1, $number2) = array($number2, $number1);
-            }
-            $_SESSION['captcha'] = $number1 - $number2;
-            break;
-        case '*':
-            $_SESSION['captcha'] = $number1 * $number2;
-            break;
-        case '/':
-            if ($number1 % $number2 == 0) {
-                $_SESSION['captcha'] = $number1 / $number2;
-            } else {
-                return generateCaptcha(); // Jika hasil tidak bulat, coba operator lain
-            }
-            break;
-    }
-
-    return [$number1, $operator, $number2];
-}
-
-// Jika ada permintaan AJAX untuk refresh CAPTCHA
-if (isset($_GET['refreshCaptcha'])) {
-    list($number1, $operator, $number2) = generateCaptcha();
-    echo json_encode(['captcha' => "$number1 $operator $number2"]);
-    exit;
-}
-
-// Proses form submission dan validasi CAPTCHA
+// Proses menyimpan data ke file JSON
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ambil soal CAPTCHA dari form yang sudah di-submit
     $userCaptcha = intval($_POST['captcha']);
     
+    // Validasi CAPTCHA dengan strict comparison
     if (isset($_POST['captcha']) && $userCaptcha === $_SESSION['captcha']) {
         $dataFile = 'data.json';
+
+        // Data dari form
         $data = [
             'nama' => $_POST['nama'],
             'tanggal' => $_POST['tanggal'],
@@ -54,15 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'total' => $_POST['total'],
             'keterangan' => $_POST['keterangan'],
         ];
+
+        // Membaca file JSON jika sudah ada, jika tidak, buat array kosong
         $existingData = file_exists($dataFile) ? json_decode(file_get_contents($dataFile), true) : [];
+
+        // Menambahkan data baru ke array
         $existingData[] = $data;
+
+        // Menyimpan kembali ke file JSON
         file_put_contents($dataFile, json_encode($existingData, JSON_PRETTY_PRINT));
         $_SESSION['successMessage'] = "Data berhasil disimpan!";
+        
+        // Reset CAPTCHA session setelah berhasil
         unset($_SESSION['captcha']);
+        
+        // Redirect ke halaman yang sama menggunakan GET untuk menghindari resubmission
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } else {
-        $_SESSION['errorMessage'] = "CAPTCHA salah! Silakan coba lagi.";
+        $_SESSION['errorMessage'] = "CAPTCHA salah! Silakan coba lagi. setelah pesan ini hilang";
         unset($_SESSION['captcha']);
     }
 }
@@ -70,18 +45,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Membaca data dari file JSON
 $dataTable = file_exists('data.json') ? json_decode(file_get_contents('data.json'), true) : [];
 
-// Generate CAPTCHA baru jika belum ada atau pada refresh
-list($number1, $operator, $number2) = generateCaptcha();
+// // Generate CAPTCHA baru (soal)
+// $operators = ['+', '-', '*'];  // Menghapus operator '/' untuk menghindari hasil desimal
+// $number1 = rand(1, 5);
+// $number2 = rand(1, 5);
+// $operator = $operators[array_rand($operators)];
+//
+// // Hitung hasil operasi untuk validasi CAPTCHA
+// switch ($operator) {
+//     case '+':
+//         $_SESSION['captcha'] = $number1 + $number2;
+//         break;
+//     case '-':
+//         // Pastikan hasil tidak negatif
+//         if ($number1 < $number2) {
+//             list($number1, $number2) = array($number2, $number1);
+//         }
+//         $_SESSION['captcha'] = $number1 - $number2;
+//         break;
+//     case '*':
+//         $_SESSION['captcha'] = $number1 * $number2;
+//         break;
+// }
+$operators = ['+', '-', '*', '/'];  // Menambahkan operator '/' ke dalam array
+$number1 = rand(1, 5);
+$number2 = rand(1, 5);
+$operator = $operators[array_rand($operators)];
+
+// Hitung hasil operasi untuk validasi CAPTCHA
+switch ($operator) {
+    case '+':
+        $_SESSION['captcha'] = $number1 + $number2;
+        break;
+    case '-':
+        // Pastikan hasil tidak negatif
+        if ($number1 < $number2) {
+            list($number1, $number2) = array($number2, $number1);
+        }
+        $_SESSION['captcha'] = $number1 - $number2;
+        break;
+    case '*':
+        $_SESSION['captcha'] = $number1 * $number2;
+        break;
+    case '/':
+        // Pastikan pembagian tidak menghasilkan desimal
+        if ($number1 % $number2 == 0) {
+            $_SESSION['captcha'] = $number1 / $number2;
+        } else {
+            // Jika pembagian menghasilkan desimal, ganti dengan operasi lain
+            $operator = $operators[array_rand(array_diff($operators, ['/']))]; 
+            // Rekursif untuk memilih operator selain '/'
+            // Cek ulang dengan operator baru
+        }
+        break;
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Kuitansi dengan CAPTCHA</title>
     <link href="./style.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <!-- Form Container -->
@@ -132,8 +164,9 @@ list($number1, $operator, $number2) = generateCaptcha();
                 </div>
                 <div class="form-group">
                     <div class="captcha">
-                        <p class="captcha-q" id="captchaQuestion">Captcha: <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</p>
-                        <p class="captcha-refresh" id="reloadCaptcha">Reload</p>
+                        <p class="captcha-q" for="captcha">Captcha: <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</p>
+                        <p class="captcha-refresh">Reload</p>
+                        <!-- <label class="captcha-q" for="captcha">Berapa hasil dari <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</label> -->
                     </div>
                     <input placeholder="?..." type="number" id="captcha" name="captcha" required>
                 </div>
@@ -180,21 +213,7 @@ list($number1, $operator, $number2) = generateCaptcha();
     </div>
 
     <script>
-        // Meng-handle klik "Reload"
-        document.getElementById('reloadCaptcha').addEventListener('click', function() {
-            // Mengirim permintaan AJAX untuk mendapatkan CAPTCHA baru
-            fetch('?refreshCaptcha=true')
-                .then(response => response.json())
-                .then(data => {
-                    // Update soal CAPTCHA di halaman
-                    document.getElementById('captchaQuestion').textContent = `Captcha: ${data.captcha}`;
-                    // Set ulang input CAPTCHA
-                    document.getElementById('captcha').value = '';
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
-        // Menghapus pesan setelah 3 detik
+        // Menghapus pesan setelah 5 detik
         setTimeout(function() {
             var successMessage = document.getElementById('successMessage');
             var errorMessage = document.getElementById('errorMessage');
@@ -204,7 +223,7 @@ list($number1, $operator, $number2) = generateCaptcha();
             if (errorMessage) {
                 errorMessage.style.display = 'none';
             }
-        }, 3000);
+        },3000);
     </script>
 </body>
 </html>

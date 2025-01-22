@@ -46,5 +46,85 @@
         "jurusan": "Rekayasa Perangkat Lunak",
         "total": "3333333",
         "keterangan": "aaaaaaaa"
+    },
+    {
+        "nama": "aaaaaa",
+        "tanggal": "7777-07-07",
+        "kelas": "XI",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "5678",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "allllll",
+        "tanggal": "8888-08-08",
+        "kelas": "XI",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "4567",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "aaaaa",
+        "tanggal": "0077-07-07",
+        "kelas": "X",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "20000",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "aaaaaaaaa",
+        "tanggal": "2025-01-23",
+        "kelas": "X",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "10000",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "aaaaaaaaa",
+        "tanggal": "0787-07-08",
+        "kelas": "X",
+        "jurusan": "Multimedia",
+        "total": "200000",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "AAAAAAA",
+        "tanggal": "9999-09-09",
+        "kelas": "X",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "1111111",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "aaaaaaa",
+        "tanggal": "0999-09-09",
+        "kelas": "X",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "200",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "haaaajinggggggggggggggggggggggggg",
+        "tanggal": "0999-09-09",
+        "kelas": "XI",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "10000",
+        "keterangan": "aaaaaa"
+    },
+    {
+        "nama": "hujaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tanggal": "9999-09-09",
+        "kelas": "X",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "6000000",
+        "keterangan": "aaaaaaa"
+    },
+    {
+        "nama": "aaaaaa",
+        "tanggal": "9999-09-09",
+        "kelas": "XI",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "20000",
+        "keterangan": "aaaaa"
     }
 ]

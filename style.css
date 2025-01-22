@@ -30,6 +30,7 @@ body {
 }
 .form-group .captcha .captcha-refresh {
     background-color: #111;
+    cursor: pointer;
     border: 1px solid #444;
     width: 90px;
     padding: 10px;

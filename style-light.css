@@ -30,6 +30,7 @@ body {
     background-color: #555;
     border: 1px solid #777;
     width: 90px;
+    cursor: pointer;
     padding: 10px;
     text-align: center;
     color: #000;
