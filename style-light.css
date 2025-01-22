@@ -1,0 +1,134 @@
+body {
+    background-color: #f9f9f9;
+    opacity: 1;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    padding-top: 100px;
+    margin: auto;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+    padding-bottom: 50px;
+}
+
+.form-container,
+.table-container {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    width: 70%;
+}
+
+.form-container h1,
+.table-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+input {
+    outline: none;
+}
+
+.form-group input,
+.form-group select,
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.form-group button {
+    background-color: #0000ff; 
+    border: 1px solid #0000ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #0000ff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    color: #333;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.message {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.message.success {
+    background-color: #4caf50;
+    color: #fff;
+    border: 1px solid #2ecc71;
+}
+
+.message.error {
+    background-color: #f44336;
+    color: #fff;
+    border: 1px solid #ff0000;
+}
+/* Responsive design */
+@media (max-width: 1080px) {
+    .container {
+        width: 100%;
+    }
+
+    .form-container,
+    .table-container {
+        width: 87%;
+    }
+}
+
