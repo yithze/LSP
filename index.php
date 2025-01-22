@@ -47,8 +47,8 @@ $dataTable = file_exists('data.json') ? json_decode(file_get_contents('data.json
 
 // Generate CAPTCHA baru (soal)
 $operators = ['+', '-', '*'];  // Menghapus operator '/' untuk menghindari hasil desimal
-$number1 = rand(1, 10);
-$number2 = rand(1, 10);
+$number1 = rand(1, 5);
+$number2 = rand(1, 5);
 $operator = $operators[array_rand($operators)];
 
 // Hitung hasil operasi untuk validasi CAPTCHA
