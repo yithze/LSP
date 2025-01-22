@@ -134,5 +134,13 @@
         "jurusan": "Multimedia",
         "total": "2222222",
         "keterangan": "aaaaaaa"
+    },
+    {
+        "nama": "aaaaaaaa",
+        "tanggal": "0099-09-09",
+        "kelas": "XI",
+        "jurusan": "Rekayasa Perangkat Lunak",
+        "total": "7777777",
+        "keterangan": "aaaaaaaaaa"
     }
 ]
