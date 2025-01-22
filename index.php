@@ -98,6 +98,7 @@ list($number1, $operator, $number2) = generateCaptcha();
             <form method="POST" autocomplete="off">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
+                    <!-- <input type="text" id="nama" name="nama" value="<?= isset($_POST['nama']) ? htmlspecialchars($_POST['nama']) : '' ?>" required> -->
                     <input type="text" id="nama" name="nama" value="<?= isset($_POST['nama']) ? htmlspecialchars($_POST['nama']) : '' ?>" required>
                 </div>
                 <div class="form-group">
@@ -124,7 +125,9 @@ list($number1, $operator, $number2) = generateCaptcha();
                 </div>
                 <div class="form-group">
                     <label for="total">Total Bayar (Rp)</label>
-                    <input type="number" id="total" name="total" value="<?= isset($_POST['total']) ? htmlspecialchars($_POST['total']) : '' ?>" required>
+                    <!-- <input type="number" id="total" name="total" value="<?= isset($_POST['total']) ? htmlspecialchars($_POST['total']) : '' ?>" required> -->
+                    <input type="text" id="total" name="total" value="<?= isset($_POST['total']) ? htmlspecialchars($_POST['total']) : '' ?>" required>
+
                 </div>
                 <div class="form-group">
                     <label for="keterangan">Keterangan</label>
@@ -205,6 +208,33 @@ list($number1, $operator, $number2) = generateCaptcha();
                 errorMessage.style.display = 'none';
             }
         }, 3000);
+
+
+
+
+        document.getElementById('nama').addEventListener('input', function(e) {
+            // Menghapus semua karakter yang bukan huruf dan spasi
+            e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+
+
+
+
+        // Format input angka dengan titik setiap 3 digit
+        document.getElementById('total').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Hapus semua selain angka
+            if (value) {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambahkan titik setiap 3 digit
+            }
+            e.target.value = value;
+        });
+
+        // Hilangkan titik saat form disubmit
+        document.querySelector('form').addEventListener('submit', function(e) {
+            let totalInput = document.getElementById('total');
+            let totalValue = totalInput.value.replace(/\./g, ''); // Hapus titik
+            totalInput.value = totalValue; // Update nilai input dengan angka tanpa titik
+        });
     </script>
 </body>
 </html>
