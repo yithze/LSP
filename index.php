@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     } else {
         $_SESSION['errorMessage'] = "CAPTCHA salah! Silakan coba lagi.";
+        unset($_SESSION['captcha']);
     }
 }
 
@@ -128,8 +129,12 @@ switch ($operator) {
                     <input type="text" id="keterangan" name="keterangan" value="<?= isset($_POST['keterangan']) ? htmlspecialchars($_POST['keterangan']) : '' ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="captcha">Berapa hasil dari <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</label>
-                    <input type="number" id="captcha" name="captcha" required>
+                    <div class="captcha">
+                        <p class="captcha-q" for="captcha">Captcha: <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</p>
+                        <p class="captcha-refresh">Reload</p>
+                        <!-- <label class="captcha-q" for="captcha">Berapa hasil dari <?= $number1 ?> <?= $operator ?> <?= $number2 ?>?</label> -->
+                    </div>
+                    <input placeholder="?..." type="number" id="captcha" name="captcha" required>
                 </div>
                 <div class="form-group">
                     <button type="submit">Submit</button>

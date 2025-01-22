@@ -12,6 +12,30 @@ body {
     align-items: flex-start;
     min-height: 100vh;
 }
+.captcha {
+    background-color: #000;
+    border: 1px solid #444;
+    height: 30px;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.captcha-q {
+    color: #fff;
+    padding: 0;
+    margin: 0;
+}
+.form-group .captcha .captcha-refresh {
+    background-color: #111;
+    border: 1px solid #444;
+    width: 90px;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
 
 .container {
     display: flex;
